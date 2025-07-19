@@ -1,5 +1,6 @@
 package com.assslash.api.dto.member;
 
+import com.assslash.api.enums.MemberRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,5 @@ public class MemberDto {
     private String username;
     private String password;
     private String name;
+    private MemberRole role;
 }
