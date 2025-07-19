@@ -1,5 +1,7 @@
 package com.assslash.api.security.handler;
 
+import com.assslash.api.dto.common.ErrorResponseDto;
+import com.assslash.api.dto.common.RespCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +28,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         log.error("[CustomAccessDeniedHandler] Not Authorized");
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
-                HttpStatus.FORBIDDEN.value(),
-                accessDeniedException.getMessage(),
-                LocalDateTime.now()
+        ErrorResponseDto errorResponseDto = ErrorResponseDto.from(
+                RespCode.FORBIDDEN
         );
 
         String responseBody = objectMapper.writeValueAsString(errorResponseDto);

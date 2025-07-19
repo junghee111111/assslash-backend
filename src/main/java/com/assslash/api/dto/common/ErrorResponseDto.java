@@ -1,5 +1,7 @@
 package com.assslash.api.dto.common;
 
+import java.time.LocalDateTime;
+
 public class ErrorResponseDto extends ResponseDto{
     private ErrorResponseDto(RespCode respCode) {
         super(respCode.getCode(), respCode.getMessage());
