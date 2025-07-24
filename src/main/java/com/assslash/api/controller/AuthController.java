@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @PostMapping("login")
-    public ResponseEntity<String> getMemberProfile() {
+    public ResponseEntity<String> login() {
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
+    }
+
+    @PostMapping("register")
+    public ResponseEntity<String> registerMember() {
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 }
