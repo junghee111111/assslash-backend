@@ -7,7 +7,7 @@ services:
       - 'MARIADB_ROOT_PASSWORD=verysecret'
       - 'MARIADB_USER=myuser'
     ports:
-      - '3306'
+      - '3306:3306'
 #  postgres:
 #    image: 'postgres:latest'
 #    environment:

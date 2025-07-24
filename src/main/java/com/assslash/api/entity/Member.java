@@ -14,8 +14,8 @@ import org.springframework.data.annotation.CreatedDate;
 @NoArgsConstructor
 public class Member {
     @Id
-    @GeneratedValue
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="member_id")
     private Long id;
 
     @Column(name = "username", length = 50, updatable = false, unique = true)
