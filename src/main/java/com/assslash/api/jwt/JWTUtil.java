@@ -1,7 +1,6 @@
 package com.assslash.api.jwt;
 
 
-import com.assslash.api.enums.MemberRole;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

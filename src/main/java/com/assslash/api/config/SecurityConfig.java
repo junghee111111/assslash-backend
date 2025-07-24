@@ -1,5 +1,6 @@
 package com.assslash.api.config;
 
+import com.assslash.api.jwt.JWTFilter;
 import com.assslash.api.jwt.JWTUtil;
 import com.assslash.api.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -50,14 +51,14 @@ public class SecurityConfig {
 
         // 경로별 인가
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/auth/register").permitAll()
-                .requestMatchers("/swagger/api-docs/**").permitAll()
-                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/login", "/auth/register").permitAll()
+                .requestMatchers("/swagger/api-docs/**", "/swagger-ui/**").permitAll()
+                .requestMatchers("/auth/info").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().authenticated()
         );
 
         // custom filter를 filter chain에 등록
+        http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         http.addFilterAt(
                 new LoginFilter(
                         authenticationManager(authenticationConfiguration),

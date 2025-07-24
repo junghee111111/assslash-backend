@@ -3,8 +3,6 @@ package com.assslash.api.service;
 import com.assslash.api.dto.member.CustomUserDetails;
 import com.assslash.api.entity.Member;
 import com.assslash.api.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
