@@ -44,10 +44,10 @@ public class JWTUtil {
                 .before(new Date());
     }
 
-    public String createJwt(String username, MemberRole role, Long expiredMs){
+    public String createJwt(String username, String role, Long expiredMs){
         return Jwts.builder()
                 .claim("username", username)
-                .claim("role", role.name())
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
