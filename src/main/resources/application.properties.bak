@@ -1,0 +1,23 @@
+spring.application.name=assslash-api
+
+# Database Configuration
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/assslash
+spring.datasource.username=myuser
+spring.datasource.password=secret
+
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Swagger UI
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/swagger/api-docs
+springdoc.swagger-ui.disable-swagger-default-url=true
+springdoc.swagger-ui.display-request-duration=true
+springdoc.swagger-ui.operations-sorter=alpha
+
+# JWT
+jwt.secret=secret
+jwt.exp_time=3600000
+
