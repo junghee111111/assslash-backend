@@ -19,11 +19,6 @@ public class AuthController {
     @Autowired
     private final AuthService authService;
 
-    @PostMapping("login")
-    public ResponseEntity<String> login() {
-        return ResponseEntity.status(HttpStatus.OK).body("OK");
-    }
-
     @PostMapping("register")
     public ResponseEntity<String> registerMember(RegisterDTO registerDTO) {
         authService.registerProcess(registerDTO);
