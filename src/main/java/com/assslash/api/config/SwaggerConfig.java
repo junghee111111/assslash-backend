@@ -1,6 +1,7 @@
 package com.assslash.api.config;
 
 import com.assslash.api.jwt.LoginFilter;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.models.media.*;
 import io.swagger.v3.oas.models.parameters.RequestBody;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +21,7 @@ import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
+import java.util.List;
 import java.util.Optional;
 
 @Configuration
@@ -28,7 +32,7 @@ public class SwaggerConfig {
                 AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME,
                 FilterChainProxy.class
         );
-        return openAPI-> {
+        return openAPI -> {
             for (SecurityFilterChain filterChain : filterChainProxy.getFilterChains()) {
                 Optional<LoginFilter> optionalFilter =
                         filterChain.getFilters().stream()
@@ -67,7 +71,21 @@ public class SwaggerConfig {
                 .version("v1.0")
                 .description("Assslash Backend API docs.");
 
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .in(SecurityScheme.In.HEADER)
+                .name("Authorization");
+
+        // Security 요구사항 설정
+        SecurityRequirement securityRequirement = new SecurityRequirement()
+                .addList("bearerAuth");
+
+
         return new OpenAPI()
+                .components(new Components().addSecuritySchemes("bearerAuth", securityScheme))
+                .security(List.of(securityRequirement))
                 .info(info);
     }
 

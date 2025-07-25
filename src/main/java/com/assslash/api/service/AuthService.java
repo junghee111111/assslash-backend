@@ -35,7 +35,7 @@ public class AuthService {
         newMember.setUsername(username);
         newMember.setPassword(bCryptPasswordEncoder.encode(password));
         newMember.setName(name);
-        newMember.setRole(MemberRole.USER);
+        newMember.setRole(MemberRole.ROLE_USER);
         memberRepository.save(newMember);
 
         return true;

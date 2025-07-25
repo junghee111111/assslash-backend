@@ -3,6 +3,7 @@ package com.assslash.api.config;
 import com.assslash.api.jwt.JWTFilter;
 import com.assslash.api.jwt.JWTUtil;
 import com.assslash.api.jwt.LoginFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -39,6 +45,30 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // cors config
+        http.cors((cors) -> cors
+                .configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+
+                        config.setAllowedOrigins(
+                                List.of(
+                                        "http://localhost:3000",
+                                        "http://localhost:8080"
+                                )
+                        );
+                        config.setAllowedMethods(Collections.singletonList("*"));
+                        config.setAllowCredentials(true);
+                        config.setAllowedHeaders(Collections.singletonList("*"));
+                        config.setMaxAge(3600L);
+
+                        config.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return config;
+                    }
+                })
+        );
 
         // csrf-disable
         http.csrf(AbstractHttpConfigurer::disable);
@@ -53,7 +83,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/login", "/auth/register").permitAll()
                 .requestMatchers("/swagger/api-docs/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/auth/info").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/auth/info").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
         );
 
@@ -69,7 +99,6 @@ public class SecurityConfig {
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
-
 
         return http.build();
     }

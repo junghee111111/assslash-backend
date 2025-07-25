@@ -52,6 +52,8 @@ public class JWTFilter extends OncePerRequestFilter {
         member.setPassword("temp");
         member.setRole(MemberRole.valueOf(role));
 
+        log.info("username: {}, role: {}", username, role);
+
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
 
         // Spring Security 인증 토큰을 생성
@@ -60,6 +62,7 @@ public class JWTFilter extends OncePerRequestFilter {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         filterChain.doFilter(request, response);
     }
 }
