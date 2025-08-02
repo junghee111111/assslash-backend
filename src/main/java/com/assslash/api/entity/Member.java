@@ -4,9 +4,10 @@ import com.assslash.api.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
-@Table(name="members")
+@Table(name="member")
 @Setter
 @Getter
 @Builder
@@ -30,5 +31,16 @@ public class Member {
     @Enumerated(EnumType.STRING)
     @Column(name="role", nullable = false)
     private MemberRole role;
+
+    @CreatedDate
+    @Column(name="created_at", nullable = false, updatable = false)
+    private Long createdAt;
+
+    @LastModifiedDate
+    @Column(name="updated_at", nullable = false)
+    private Long updatedAt;
+
+    @Column(name="expired_at", nullable = true)
+    private Long expiredAt;
 }
 
