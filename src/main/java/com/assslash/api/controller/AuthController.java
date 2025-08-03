@@ -1,5 +1,7 @@
 package com.assslash.api.controller;
 
+import com.assslash.api.dto.common.RespCode;
+import com.assslash.api.dto.common.ResponseDto;
 import com.assslash.api.dto.member.RegisterDTO;
 import com.assslash.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +22,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("register")
-    public ResponseEntity<String> registerMember(RegisterDTO registerDTO) {
+    public ResponseDto registerMember(RegisterDTO registerDTO) {
         authService.registerProcess(registerDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("OK");
+        return ResponseDto.of(RespCode.OK);
     }
 
     @GetMapping("info")
-    public ResponseEntity<String> info() {
-        return ResponseEntity.status(HttpStatus.OK).body("OK");
+    public ResponseDto info() {
+        return ResponseDto.of(RespCode.OK);
     }
 }

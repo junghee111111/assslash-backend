@@ -3,6 +3,7 @@ package com.assslash.api.entity;
 import com.assslash.api.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -33,11 +34,11 @@ public class Member {
     private MemberRole role;
 
     @CreatedDate
-    @Column(name="created_at", nullable = false, updatable = false)
+    @Column(name="created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Long createdAt;
 
     @LastModifiedDate
-    @Column(name="updated_at", nullable = false)
+    @Column(name="updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Long updatedAt;
 
     @Column(name="expired_at", nullable = true)
