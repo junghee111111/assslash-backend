@@ -1,5 +1,6 @@
 package com.assslash.api.entity;
 
+import com.assslash.api.entity.common.BaseExpirableTimeEntity;
 import com.assslash.api.enums.MemberRole;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseExpirableTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
@@ -33,15 +34,6 @@ public class Member {
     @Column(name="role", nullable = false)
     private MemberRole role;
 
-    @CreatedDate
-    @Column(name="created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Long createdAt;
 
-    @LastModifiedDate
-    @Column(name="updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Long updatedAt;
-
-    @Column(name="expired_at", nullable = true)
-    private Long expiredAt;
 }
 
