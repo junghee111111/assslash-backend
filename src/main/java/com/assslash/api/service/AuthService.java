@@ -25,9 +25,9 @@ public class AuthService {
         String password = registerDTO.getPassword();
         String name = registerDTO.getName();
 
-        Boolean isExiststUsername = memberRepository.existsByUsername(username);
-        Boolean isExiststName = memberRepository.existsByName(name);
-        if (isExiststUsername || isExiststName) {
+        Boolean isUsernameExists = memberRepository.existsByUsername(username);
+        Boolean isNameExists = memberRepository.existsByName(name);
+        if (isUsernameExists || isNameExists) {
             return false;
         }
 

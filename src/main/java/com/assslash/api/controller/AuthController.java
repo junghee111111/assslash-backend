@@ -23,7 +23,10 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseDto registerMember(RegisterDTO registerDTO) {
-        authService.registerProcess(registerDTO);
+        boolean succeeded = authService.registerProcess(registerDTO);
+        if (!succeeded) {
+            return ResponseDto.of(RespCode.ALREADY_USERNAME_EXISTS);
+        }
         return ResponseDto.of(RespCode.OK);
     }
 
