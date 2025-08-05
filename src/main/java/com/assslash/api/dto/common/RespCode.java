@@ -14,7 +14,7 @@ public enum RespCode {
     INTERNAL_ERROR(500, HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
     METHOD_NOT_ALLOWED(403, HttpStatus.METHOD_NOT_ALLOWED, "Method not allowed!"),
     REGISTER_USERNAME_EXISTS(403, HttpStatus.METHOD_NOT_ALLOWED, "USERNAME_EXISTS"),
-    REGISTER_NAME_EXISTS(403, HttpStatus.METHOD_NOT_ALLOWED, "REGISTER_NAME_EXISTS"),
+    REGISTER_NAME_EXISTS(403, HttpStatus.METHOD_NOT_ALLOWED, "NAME_EXISTS"),
     FORBIDDEN(401, HttpStatus.FORBIDDEN, "Forbidden");
 
     private final int code;
