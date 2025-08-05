@@ -32,7 +32,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String rawToken = request.getHeader("Authorization");
 
         if (rawToken == null || !rawToken.startsWith("Bearer ")) {
-            log.error("JWT Token is missing");
+            // log.error("JWT Token is missing");
             filterChain.doFilter(request, response); // 다음 필터로 필터 체인 넘김
             return; // 메소드 종료
         }

@@ -33,7 +33,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) {
         LoginDTO loginDTO = new LoginDTO();
 
         // json 형식으로 받기 위해 ObjectMapper를 이용한다.
@@ -42,7 +42,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             ServletInputStream inputStream = request.getInputStream();
             String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
             loginDTO = objectMapper.readValue(messageBody, LoginDTO.class);
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -74,9 +74,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(username, role, 60*60*10L);
+        String token = jwtUtil.createJwt(username, role, 60 * 60 * 10L);
 
-        response.addHeader("Authorization", "Bearer "+token);
+        response.addHeader("Authorization", "Bearer " + token);
     }
 
     @Override
@@ -85,6 +85,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletResponse response,
             AuthenticationException failed
     ) {
+        logger.error("LoginFilter/unsuccessfulAuthentication : " + failed.getMessage());
         response.setStatus(401);
     }
 

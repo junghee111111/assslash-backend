@@ -6,12 +6,8 @@ import com.assslash.api.dto.member.RegisterDTO;
 import com.assslash.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,16 +18,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("register")
-    public ResponseDto registerMember(RegisterDTO registerDTO) {
-        boolean succeeded = authService.registerProcess(registerDTO);
-        if (!succeeded) {
-            return ResponseDto.of(RespCode.ALREADY_USERNAME_EXISTS);
-        }
-        return ResponseDto.of(RespCode.OK);
+    public ResponseEntity<ResponseDto> registerMember(@RequestBody RegisterDTO registerDTO) {
+        return authService.registerProcess(registerDTO);
     }
 
     @GetMapping("info")
-    public ResponseDto info() {
+    public ResponseEntity<ResponseDto> info() {
         return ResponseDto.of(RespCode.OK);
     }
 }

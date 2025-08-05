@@ -1,9 +1,12 @@
 package com.assslash.api.service;
 
+import com.assslash.api.dto.common.RespCode;
+import com.assslash.api.dto.common.ResponseDto;
 import com.assslash.api.dto.member.RegisterDTO;
 import com.assslash.api.entity.Member;
 import com.assslash.api.enums.MemberRole;
 import com.assslash.api.repository.MemberRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +23,20 @@ public class AuthService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Boolean registerProcess(RegisterDTO registerDTO) {
+    public ResponseEntity<ResponseDto> registerProcess(RegisterDTO registerDTO) {
         String username = registerDTO.getUsername();
         String password = registerDTO.getPassword();
         String name = registerDTO.getName();
 
         Boolean isUsernameExists = memberRepository.existsByUsername(username);
         Boolean isNameExists = memberRepository.existsByName(name);
-        if (isUsernameExists || isNameExists) {
-            return false;
+
+        if (isUsernameExists) {
+            return ResponseDto.of(RespCode.REGISTER_USERNAME_EXISTS);
+        }
+
+        if (isNameExists) {
+            return ResponseDto.of(RespCode.REGISTER_NAME_EXISTS);
         }
 
         Member newMember = new Member();
@@ -38,6 +46,6 @@ public class AuthService {
         newMember.setRole(MemberRole.ROLE_USER);
         memberRepository.save(newMember);
 
-        return true;
+        return ResponseDto.of(RespCode.OK);
     }
 }
