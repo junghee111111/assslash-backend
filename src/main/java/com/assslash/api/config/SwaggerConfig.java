@@ -1,6 +1,6 @@
 package com.assslash.api.config;
 
-import com.assslash.api.jwt.LoginFilter;
+import com.assslash.api.web.jwt.LoginFilter;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;

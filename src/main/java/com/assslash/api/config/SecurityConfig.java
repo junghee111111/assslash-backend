@@ -1,8 +1,8 @@
 package com.assslash.api.config;
 
-import com.assslash.api.jwt.JWTFilter;
-import com.assslash.api.jwt.JWTUtil;
-import com.assslash.api.jwt.LoginFilter;
+import com.assslash.api.web.jwt.JWTFilter;
+import com.assslash.api.web.jwt.JWTUtil;
+import com.assslash.api.web.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

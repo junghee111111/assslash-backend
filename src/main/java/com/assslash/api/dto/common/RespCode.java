@@ -15,7 +15,8 @@ public enum RespCode {
     METHOD_NOT_ALLOWED(403, HttpStatus.METHOD_NOT_ALLOWED, "Method not allowed!"),
     REGISTER_USERNAME_EXISTS(403, HttpStatus.METHOD_NOT_ALLOWED, "USERNAME_EXISTS"),
     REGISTER_NAME_EXISTS(403, HttpStatus.METHOD_NOT_ALLOWED, "NAME_EXISTS"),
-    FORBIDDEN(401, HttpStatus.FORBIDDEN, "Forbidden");
+    FORBIDDEN(401, HttpStatus.FORBIDDEN, "Forbidden"),
+    MEMBER_NOT_FOUND(404, HttpStatus.NOT_FOUND, "MEMBER_NOT_FOUND");
 
     private final int code;
     private final HttpStatus httpStatus;
