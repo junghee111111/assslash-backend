@@ -1,8 +1,8 @@
 package com.assslash.api.entity;
 
+import com.assslash.api.entity.common.BaseExpirableTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "battle_log")
@@ -11,7 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BattleLog {
+public class BattleLog extends BaseExpirableTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "battle_log_id")
@@ -28,8 +28,4 @@ public class BattleLog {
 
     @Column(name = "season", nullable = false)
     private int season;
-
-    @CreatedDate
-    @Column(name="created_at", nullable = false, updatable = false)
-    private Long createdAt;
 }

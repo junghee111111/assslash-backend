@@ -1,4 +1,4 @@
-package com.assslash.api.jwt;
+package com.assslash.api.web.jwt;
 
 import com.assslash.api.dto.member.CustomUserDetails;
 import com.assslash.api.dto.member.LoginDTO;
@@ -74,7 +74,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String role = auth.getAuthority();
 
-        String token = jwtUtil.createJwt(username, role, 60 * 60 * 10L);
+        String token = jwtUtil.createJwt(username, role, 1000 * 60 * 10L);
 
         response.addHeader("Authorization", "Bearer " + token);
     }

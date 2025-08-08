@@ -1,4 +1,4 @@
-package com.assslash.api.jwt;
+package com.assslash.api.web.jwt;
 
 import com.assslash.api.dto.member.CustomUserDetails;
 import com.assslash.api.entity.Member;
@@ -32,12 +32,12 @@ public class JWTFilter extends OncePerRequestFilter {
         String rawToken = request.getHeader("Authorization");
 
         if (rawToken == null || !rawToken.startsWith("Bearer ")) {
-            // log.error("JWT Token is missing");
             filterChain.doFilter(request, response); // 다음 필터로 필터 체인 넘김
             return; // 메소드 종료
         }
 
         String token = rawToken.substring(7);
+
         if (jwtUtil.isExpired(token)) {
             log.error("JWT Token is expired");
             filterChain.doFilter(request, response);
@@ -51,8 +51,6 @@ public class JWTFilter extends OncePerRequestFilter {
         member.setUsername(username);
         member.setPassword("temp");
         member.setRole(MemberRole.valueOf(role));
-
-        log.info("username: {}, role: {}", username, role);
 
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
 

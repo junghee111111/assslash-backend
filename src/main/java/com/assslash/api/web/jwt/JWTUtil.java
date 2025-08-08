@@ -1,4 +1,4 @@
-package com.assslash.api.jwt;
+package com.assslash.api.web.jwt;
 
 
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,7 @@ import java.util.Date;
 public class JWTUtil {
     private SecretKey secretKey;
 
-    public JWTUtil(@Value("${spring.jwt.secret}")String secret) {
+    public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
         this.secretKey = new SecretKeySpec(
                 secret.getBytes(StandardCharsets.UTF_8),
                 Jwts.SIG.HS256.key().build().getAlgorithm()
@@ -36,14 +36,18 @@ public class JWTUtil {
     }
 
     public Boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(secretKey).build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getExpiration()
-                .before(new Date());
+        try {
+            return Jwts.parser().verifyWith(secretKey).build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getExpiration()
+                    .before(new Date());
+        } catch (Exception e) {
+            return true;
+        }
     }
 
-    public String createJwt(String username, String role, Long expiredMs){
+    public String createJwt(String username, String role, Long expiredMs) {
         return Jwts.builder()
                 .claim("username", username)
                 .claim("role", role)
