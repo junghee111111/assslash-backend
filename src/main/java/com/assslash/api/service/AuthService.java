@@ -40,6 +40,15 @@ public class AuthService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /**
+     * 회원가입 로직의 전반을 담당합니다.
+     *
+     * @param registerDTO
+     * @return ResponseDto w/ RespCode.OK
+     * Possible errors:
+     * - REGISTER_USERNAME_EXISTS : 해당 username이 중복인 경우
+     * - REGISTER_NAME_EXISTS : 해당 name이 중복인 경우
+     */
     public ResponseEntity<ResponseDto> registerProcess(RegisterDTO registerDTO) {
         String username = registerDTO.getUsername();
         String password = registerDTO.getPassword();
@@ -66,6 +75,15 @@ public class AuthService {
         return ResponseDto.of(RespCode.OK);
     }
 
+    /**
+     * Screen02에서 나의 정보를 불러옵니다.
+     *
+     * @param member
+     * @return RespMyInfoDTO
+     * Possible errors:
+     * - MEMBER_NOT_FOUND : 해당 jwt token를 parsing 해서 나온 username을 이용하여 DB를 조회하였을 때 찾을 수 없는 경우
+     * - METHOD_NOT_ALLOWED : 현재 적어도 하나의 시즌이 진행되어야 하는데 그렇지 않은 경우.
+     */
     public ResponseEntity<ResponseDataDto<RespMyInfoDTO>> getMyInfo(Member member) {
         Member foundMember = memberRepository.findByUsername(member.getUsername());
         RespMyInfoDTO dto = new RespMyInfoDTO();
@@ -84,11 +102,13 @@ public class AuthService {
             return ResponseDataDto.of(RespCode.METHOD_NOT_ALLOWED, dto);
         }
 
+        // load current user's seasonLog
         SeasonLog seasonLog = seasonLogRepository.findFirstByMemberIdAndSeasonId(
                 foundMember.getId(), currentSeason.getId()
         );
 
         if (seasonLog == null) {
+            // make a new seasonLog if not exists for the current season.
             SeasonLog newSeasonLog = SeasonLog.builder()
                     .memberId(foundMember.getId())
                     .seasonId(currentSeason.getId())
